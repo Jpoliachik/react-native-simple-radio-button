@@ -86,37 +86,41 @@ Pro
   formHorizontal={true}
   animation={true}
 >
-  <RadioButton labelHorizontal={true} key={i} >
-    {/*  You can set RadioButtonLabel before RadioButtonInput */}
-    <RadioButtonInput
-      obj={obj}
-      index={i}
-      isSelected={this.state.value3Index === i}
-      onPress={onPress}
-      borderWidth={1}
-      buttonInnerColor={'#e74c3c'}
-      buttonOuterColor={this.state.value3Index === i ? '#2196f3' : '#000'}
-      buttonSize={40}
-      buttonOuterSize={80}
-      buttonStyle={{}}
-      buttonWrapStyle={{marginLeft: 10}}
-    />
-    <RadioButtonLabel
-      obj={obj}
-      index={i}
-      labelHorizontal={true}
-      onPress={onPress}
-      labelStyle={{fontSize: 20, color: '#2ecc71'}}
-      labelWrapStyle={{}}
-    />
-  </RadioButton>
+  {/* To create radio buttons, loop through your array of options */}
+  {radio_props.map((obj, i) => {
+    <RadioButton labelHorizontal={true} key={i} >
+      {/*  You can set RadioButtonLabel before RadioButtonInput */}
+      <RadioButtonInput
+        obj={obj}
+        index={i}
+        isSelected={this.state.value3Index === i}
+        onPress={onPress}
+        borderWidth={1}
+        buttonInnerColor={'#e74c3c'}
+        buttonOuterColor={this.state.value3Index === i ? '#2196f3' : '#000'}
+        buttonSize={40}
+        buttonOuterSize={80}
+        buttonStyle={{}}
+        buttonWrapStyle={{marginLeft: 10}}
+      />
+      <RadioButtonLabel
+        obj={obj}
+        index={i}
+        labelHorizontal={true}
+        onPress={onPress}
+        labelStyle={{fontSize: 20, color: '#2ecc71'}}
+        labelWrapStyle={{}}
+      />
+      </RadioButton>
+  })}
+  
 </RadioForm>
 ```
 
 # Methods
 
 ## updateIsActiveIndex
-update active radio button
+Updating active radio button forcibly
 
 # Props
 
@@ -128,7 +132,9 @@ radio button value and label array
 callback when radio button clicked.
 
 ### initial (Default: `0`)
-initial selected
+The index of selected raio button. This is used when this component is activated. If you want to
+pass initial as asynchronous, you can use updateIsActiveIndex function.
+> If you want to make it empty initially, please pass `-1`
 
 ### buttonColor(Default: '#2196f3')
 change radio button color
@@ -192,6 +198,18 @@ if you pass false, animation of radio button is disabled
 
 ![Demo](./doc/demo_1.gif)
 
+### accessible
+indicates accessibility for the individual radio button input and radio button label components
+
+### accessibilityLabel
+used to set accessibilityLabel for individual radio button input and radio button label components,
+radio button input will have accessibilityLabel = [accessibilityLabel]Input[index]
+radio button label will have accessibilityLabel = [accessibilityLabel]Label[index]
+
+### testID
+used to set testID for individual radio button input and radio button label components,
+radio button input will have testID = [testID]Input[index]
+radio button label will have testID = [testID]Label[index]
 
 ## RadioButton Component
 ### isSelected
@@ -209,9 +227,36 @@ The label color
 ### style
 The label style
 
+### wrapStyle
+Styles that are applied to the <View> wrapping the RadioButton component.
+
 ## onPress _*required_
 callback when radio button clicked.
 
+### idSeparator (Default: `|`)
+separator used for extracting id from accessibilityLabel and testID
+
+### accessible
+indicates accessibility for the wrapped radio button input and radio button label components
+
+### accessibilityLabel
+used to set accessibilityLabel for the wrapped radio button input and radio button label components, needs to be of the format [accessibilityLabel][separator][id]
+radio button input will have accessibilityLabel = [accessibilityLabel]Input[index]
+radio button label will have accessibilityLabel = [accessibilityLabel]Label[index]
+
+### testID
+used to set testID for individual radio button input and radio button label components, needs to be of the format [testID][separator][id]
+radio button input will have testID = [testID]Input[index]
+radio button label will have testID = [testID]Label[index]
+
+```js
+<RadioButton
+  accessible={true}
+  idSeparator=','
+  accessibilityLabel='noteType,1'
+  testID='noteType,1'
+/>
+```
 
 # RadioButtonInput
 ### isSelected
@@ -234,6 +279,15 @@ Custom button style
 ### buttonWrapStyle
 Custom style for view of button's outside
 
+### accessible
+indicates accessibility for the radio button input component
+
+### accessibilityLabel
+used to set accessibilityLabel (content description / label for Android) for the radio button input component
+
+### testID
+used to set testID (id / name for iOS) for the radio button input component
+
 # RadioButtonLabel
 ### labelHorizontal
 If you pass true, the button and label will be aligned horizontally.
@@ -246,6 +300,15 @@ If you pass style, you can change label wrapper view style as you want
 
 ### onPress _*required_
 callback when radio button clicked.
+
+### accessible
+indicates accessibility for the radio button label component
+
+### accessibilityLabel
+used to set accessibilityLabel (content description / label for Android) for the radio button label component
+
+### testID
+used to set testID (id / name for iOS) for the radio button label component
 
 
 # Contributing
